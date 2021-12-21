@@ -1,12 +1,68 @@
 <template>
   <div id="app">
-   
-    <router-view/>
-     
-  </div>
-</template>
+   <div class="wrapper"> 
+    <header>
+     <div class="title">My personal costs
 
-<style lang="scss">
+     </div>
+     </header>
+     <main>
+       <add-payment-form @addNewPayment="AddPaymentForm" />
+       <payments-display :items="paymentsList"/>
+     </main>
+   </div>
+   <router-view/>
+     <calculator />
+     <header>
+
+     </header>
+  </div>
+  
+</template>
+<script>
+import PaymentsDisplay from './components/PaymentsDisplay.vue'
+import AddPaymentForm from './components/AddPaymentForm.vue'
+export default {
+components: {PaymentsDisplay, AddPaymentForm},
+name: 'App',
+data()
+{
+  return{
+    show:true,
+    paymentsList: []
+  };
+},
+methods: {
+  fetchData () {
+return [
+{
+date: '20.12.2021',
+category: 'Food',
+value: 169,
+},
+{
+date: '20.12.2021',
+category: 'Transport',
+value: 360,
+},
+{
+date: '20.12.2021',
+category: 'Food',
+value: 532,
+},
+];
+},
+},
+addToPaymentList(data) {
+  // this.paymentsList.push(data),
+   this.paymentsList = [...this.paymentsList, data]
+},
+created() {
+  this.paymentsList = this.fetchData()
+}
+};
+</script>
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,5 +85,6 @@
   h1{
     font-size: 20px;
   }
+
 }
 </style>
