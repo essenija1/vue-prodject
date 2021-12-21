@@ -7,7 +7,7 @@
      </div>
      </header>
      <main>
-       <add-payment-form @addNewPayment="AddPaymentForm" />
+       <add-payment-form @addNewPayment="addToPaymentList" />
        <payments-display :items="paymentsList"/>
      </main>
    </div>
@@ -53,9 +53,10 @@ value: 532,
 ];
 },
 },
-addToPaymentList(data) {
+addToPaymentList(props) {
+     console.log('run')
   // this.paymentsList.push(data),
-   this.paymentsList = [...this.paymentsList, data]
+   this.paymentsList = [...this.paymentsList, props]
 },
 created() {
   this.paymentsList = this.fetchData()
