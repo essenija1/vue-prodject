@@ -6,6 +6,7 @@
     <hr />
     <my-button v-if="show"/>
     <button @click="show=!show">Show/Hide</button>
+    
   </div>
 </template>
 
