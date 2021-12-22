@@ -1,24 +1,31 @@
 <template>
     <div class="wrapper">
        <input placeholder="date" v-model="date"/>
-       <input placeholder="category" v-model="category"/>
-       <input placeholder="value" type="number" v-model.number="value"/>
+       <div class="categoryList">
+           <select v-model="category">
+            <option v-for="(category, idx) in categoryList" :key="idx" :value="category">{{ category}}
+
+            </option>
+           </select>
+       </div>
+       <input placeholder="value" type="number" v-model="value"/>
        <button @click="onClick">Save!</button>
     </div>
 </template>
 <script>
 
-
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 export default {
     name: "AddPaymentForm",
        data() {
            return {
                date:"",
                category: "",
-               value: ""
+               value: "",
            };
        },
        computed: {
+           ...mapGetters({CategoryList:'getCategoryList'}),
             getCurrentDate() {
                 const today = new Date() 
                 const d = today.getDate()
@@ -28,6 +35,8 @@ export default {
             }
        },
        methods: {
+           ...mapActions(['fetchCategory']),
+           ...mapMutations(['addPaymentListData']),
             onclick() {
                 const data = {
                     date: this.date || this.getCurrentDate,
@@ -35,9 +44,16 @@ export default {
                     value: this.value
 
                 };
-               this.$emit('addNewPayment', data)
+                this.addPaymentListData(data);
+               this.$emit('addNewPayment', data);
             },
        },
+      async mounted() {
+           if(!this.getCategoryList?.length) {
+             await this.fetchCategory();
+             this.category = this.CategoryList[0]
+           }
+       }
 };
 </script>
 <style>
