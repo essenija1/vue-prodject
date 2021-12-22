@@ -2,13 +2,14 @@
   <div id="app">
    <div class="wrapper"> 
     <header>
-     <div class="title">My personal costs
+     <div class="title">My personal costs</div>
+     <div class="title" v-if="total"> Total: {{total}}</div>
 
-     </div>
      </header>
      <main>
-       <add-payment-form @addNewPayment="addToPaymentList" />
+       <add-payment-form />
        <payments-display :items="paymentsList"/>
+       <pagination :cur="page" :n="n" :length="paymentsList.length" @paginate="changePage"/>
      </main>
    </div>
    <router-view/>
@@ -20,8 +21,9 @@
   
 </template>
 <script>
-import PaymentsDisplay from './components/PaymentsDisplay.vue'
-import AddPaymentForm from './components/AddPaymentForm.vue'
+import PaymentsDisplay from './components/PaymentsDisplay.vue';
+import AddPaymentForm from './components/AddPaymentForm.vue';
+import { mapMutations, mapGetters, mapActions } from 'vuex'
 export default {
 components: {PaymentsDisplay, AddPaymentForm},
 name: 'App',
@@ -29,10 +31,22 @@ data()
 {
   return{
     show:true,
-    paymentsList: []
+    page: 1,
+    n: 4,
   };
 },
+computed: {
+  ...mapGetters({paymentsList: 'getPaymentsList'}),
+  total(){
+    return this.$store.getters.getPaymentsListFullValuePrice
+  }
+},
 methods: {
+  changePage(p) {
+    this.page = p
+  },
+  ...mapActions(['fetchData']),
+  ...mapMutations({fetch: "setPaymentsListData"}),
   fetchData () {
 return [
 {
@@ -55,11 +69,13 @@ value: 532,
 },
 addToPaymentList(props) {
      console.log('run')
-  // this.paymentsList.push(data),
    this.paymentsList = [...this.paymentsList, props]
 },
 created() {
-  this.paymentsList = this.fetchData()
+    this.fetchData();
+  //this.$store.commit('setPaymentsListData', this.fetchData());
+    //this.fetch(this.fetchData());
+   // this.$store.dispatch('fetchData')
 }
 };
 </script>
