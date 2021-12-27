@@ -1,50 +1,66 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-Vue.use(Vuex)
+import Dashboard from '../views/Dashboard.vue'
+import About from '../views/About.vue'
+import NotFound from '../views/NotFound.vue'
 
+Vue.use(VueRouter)
 
-export default new Vuex.Store({
-  state: {
-    paymentsList: [],
-    categoryList: []
+const routes = [
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
   },
-  mutations: {
-    setPaymentsListData(state, payload) {
-      state.paymentsList = payload;
-
-    },
-    addPaymentListData(state, payload) {
-      //state.paymentsList[0] = payload;
-      state.paymentsList.push(payload);
-    },
-    editPaymentListFirstElement(state, payload) {
-      Vue.set(state.paymentsList, 0, payload);
-      state.paymentsList[0] = payload;
-      state.paymentsList = [...state.paymentsList]
-
-    },
-    setCategoryData(state, payload){
-      state.CategoryList = payload
-    }
+  {
+  path: "/dashboard/:page",
+  name: "dashboard",
+  component: Dashboard,
   },
-  getters: {
-    getPaymentsListFullValuePrice: state => {
-      return state.paymentsList.reduce((acc, cur) => acc + cur.value, 0)
-    },
-    getPaymentsList: state => state.paymentsList?.length ? state.paymentsList : [],
-    getCategoryList: state => state.categoryList,
+{
+  path: "/About",
+    name: "about",
+      component: About,
   },
-  actions: {
-    fetchCategory({ commit }) {
-
-      return new Promise(resolve => {
-        setTimeout(() => {
-          const items = ['Sport', 'Education', 'Internet', 'Food', 'Transport'];
-      resolve(items);
-        },2000)
-      }).then(res => commit('setPaymentsCategoryData', res))
-    }
+{
+  path: '/NotFound',
+    name: 'notfoundt',
+      component: NotFound,
   },
+{
+  path: "*",
+    component: NotFound,
+  },
+]
 
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 });
+
+const userAuth = true;
+
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'notfound' && !userAuth) {
+    next({
+      name: "notfound"
+    });
+  } else {
+    next();
+  }
+});
+const getTitleByRoutes = routeName => {
+  return{
+    'dashboard': "Ура, у нас ест страница наших трат",
+    'about': "Страница о сервисе",
+    'notfound': "Страница не найдена"
+  }[routeName];
+};
+router.afterEach((to)=>{
+  document.title = getTitleByRoutes(to.name)
+});
+export default router;
