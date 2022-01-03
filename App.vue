@@ -5,37 +5,32 @@
         <router-link to="/dashboard">dashboard</router-link> /
         <router-link to="/about">about</router-link> /
         <span @click="goToPageNotFound">notfound</span>
-
-        <!-- <div class="title">My personal costs</div>
-     <div class="title" v-if="total"> Total: {{total}}</div>-->
       </header>
       <main>
         <router-view />
-        <!--<dashboard v-if="page === 'dashboard'" />
-        <about v-else-if="page === 'about'" />
-        <not-found v-else />-->
-        <!-- <add-payment-form />
-       <payments-display :items="paymentsList"/>
-       <pagination :cur="page" :n="n" :length="paymentsList.length" @paginate="changePage"/>-->
+        <calculator />
       </main>
+      <transition name="fade">
+      <modal-window-add-payment-form 
+      :settings="setting" 
+      :componentName = "componentName"
+      v-if="componentName" />
+      </transition>
     </div>
-    <router-view />
-    <calculator />
-    <header></header>
   </div>
 </template>
+
 <script>
-//import PaymentsDisplay from './components/PaymentsDisplay.vue';
-//import AddPaymentForm from './components/AddPaymentForm.vue';
-//import Pagination from "./components/Pagination.vue";
-//import { mapMutations, mapGetters, mapActions } from 'vuex'
-//import Dashboard from "./views/Dashboard.vue";
-//import About from "./views/About.vue";
-//import NotFound from "./views/NotFound.vue";
+//import ModalWindowAddPaymentForm from './components/ModalWindowAddPaymentForm.vue';
 export default {
+  components: { ModalWindowAddPaymentForm: () =>import(/*webpackChunkName: "Modal"*/'./components/ModalWindowAddPaymentForm.vue') },
   name: "App",
   data() {
-    return {};
+    return {
+      modalShow: false,
+      setting: {},
+      componentName: ''
+    };
   },
   methods: {
     goToPageNotFound() {
@@ -44,6 +39,27 @@ export default {
         name:"notfound"
       });
     },
+    onShow({name, setting}) {
+        this.componentName = name
+        this.settings = settings
+    },
+    onHide() {
+      this.setting = {}
+        this.componentName = ''
+    },
+  },
+  mounted () {
+    this.$modal.Eventbus.$on('show')
+    this.$modal.Eventbus.$on('hide')
+  },
+beforeDestroy () {
+    this.$modal.Eventbus.$off('show')
+    this.$modal.Eventbus.$off('hide')
+  },
+
+  created() {
+    this.$modal.show()
+    this.$modal.hide()
   },
 };
   //methods: {
@@ -135,6 +151,12 @@ export default {
   }
   h1 {
     font-size: 20px;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
 }
 </style>
