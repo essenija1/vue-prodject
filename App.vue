@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 //import ModalWindowAddPaymentForm from './components/ModalWindowAddPaymentForm.vue';
 export default {
   components: { ModalWindowAddPaymentForm: () =>import(/*webpackChunkName: "Modal"*/'./components/ModalWindowAddPaymentForm.vue') },
@@ -33,6 +34,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["fetchData"]),
     goToPageNotFound() {
       if(this.$route.name === 'notfound') return
       this.$router.push({
@@ -48,6 +50,10 @@ export default {
         this.componentName = ''
     },
   },
+  async created() {
+      await this.fetchData();
+  },
+
   mounted () {
     this.$modal.Eventbus.$on('show')
     this.$modal.Eventbus.$on('hide')
