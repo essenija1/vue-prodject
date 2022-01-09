@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 
+
+
 export const localDB = {
   "page1": [
     { "id": 1, "date": "20.12.2021", "category": "Food", "value": 169 },
@@ -80,7 +82,7 @@ export default new Vuex.Store({
         setTimeout(() => {
           const items = ['Sport', 'Education', 'Internet', 'Food', 'Transport'];
           resolve(items);
-        }, 2000)
+        }, 0)
       }).then((res) => commit('setPaymentsCategoryData', res))
     }
   },
