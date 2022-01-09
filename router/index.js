@@ -7,6 +7,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/add/payment/:category",
+    //path: "/:action/:section/:category",
+    name: "addPayment",
+    component: ()=>import('../components/AddPaymentForm.vue')
+  },
+  {
     path: "/dashboard",
     name: "dashboard",
     component: () => import(/*webpackChunkName: "Dashboard" */'../views/Dashboard.vue'),
