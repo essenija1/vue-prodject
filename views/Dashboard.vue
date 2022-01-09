@@ -54,7 +54,9 @@ export default {
     ...mapMutations({ fetch: "setPaymentsListData" }),
   },
   async created() {
-    await this.fetchData(1);
+  //  if(!paymentsList.lenght) {
+   //   await this.fetchData(1);
+   // }
     if (this.$route.params?.page) {
       this.page = Number(this.$route.params.page);
     }
