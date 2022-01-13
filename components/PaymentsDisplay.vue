@@ -27,7 +27,7 @@
 export default {
   name: "PaymentsDisplay",
   props: {
-    item: {
+    items: {
       type: Array,
       default: () => [],
     },
