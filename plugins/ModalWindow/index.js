@@ -15,12 +15,10 @@ export default {
 
 
             show(name, setting) {
-                console.log(name, setting)
-                debugger
-                this.EvantBus.$emit('show', { name, setting })
+                this.EvantBus.$emit("show", { name, setting });
             },
             hide() {
-                this.EvantBus.$emit('hide')
+                this.EvantBus.$emit("hide")
             },
         };
     },
