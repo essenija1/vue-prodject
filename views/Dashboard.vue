@@ -1,67 +1,104 @@
 <template>
-  <main>
-    <payments-display :items="paymentsList" />
-    <pagination :cur="page" :n="n" :length="12" @paginate="changePage" />
-    <button @click="openModal">Add new cost +</button>
-  </main>
+  <v-container>
+    <v-row>
+      <v-col>
+        <div class="text-h5 text-sm-h3 mb-8">My personal cost</div>
+        <v-dialog v-model="dialog" width="500">
+          <template v-slot:activator="{on}">
+            <v-btn color="teal" dark v-on="on">
+              ADD NEW COST <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+     
+            <add-payment-form @addNewPayment="dialog=false"/>
+          
+        </v-dialog>
+        <!--<my-button>
+          <template #icon>
+            <v-icon>mdi-plus</v-icon>
+            </template>Жми</my-button>
+            <my-button><template #default="props">{{props}}</template></my-button>-->
+        
+
+        <payments-display :items="currentElement" />
+        <!--<pagination 
+          :cur="page" 
+          :n="n" 
+          :length="12" 
+          @paginate="changePage" />
+          <button @click="openModal">Add new cost +</button>-->
+      </v-col>
+      <v-col> chart </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 import PaymentsDisplay from "../components/PaymentsDisplay.vue";
-import Pagination from "../components/Pagination.vue";
 import { mapMutations, mapGetters, mapActions } from "vuex";
+import AddPaymentForm from '../components/AddPaymentForm.vue';
+
+//import Pagination from "../components/Pagination.vue";
+//import MyButton from "../components/MyButton.vue";
+
 export default {
   name: "Dashboard",
   components: {
     PaymentsDisplay,
-    Pagination,
+    AddPaymentForm,
+    //Pagination,
+    //MyButton
   },
   data() {
     return {
       addFormShow: false,
+      dialog: false,
       settings: {
         content: "addPaymentForm",
         header: "Add new cost",
       },
       page: 1,
-      n: 3,
+      n: 10,
     };
   },
   computed: {
-    ...mapGetters(["getPaymentsList"]),
+    ...mapGetters({ paymentsList: "getPaymentsList" }),
     total() {
       return this.$store.getters.getPaymentsListFullValuePrice;
     },
     currentElement() {
+      const { n, page } = this;
       return this.paymentsList.slice(
-        this.n * (this.page - 1),
-        this.n * (this.page - 1) + this.n
-      );
+        n * (page - 1),
+        n * (page - 1) + n);
+    
     },
   },
   methods: {
+    ...mapMutations({ fetch: "setPaymentsListData" }),
+    ...mapActions(["fetchData"]),
     changePage(p) {
       this.page = p;
-      this.fetchData(p);
     },
     openModal() {
       this.$modal.show("AddPaymentForm", {
-        content: "addPayment",
+        content: "addPaymentForm",
         header: "Add new cost",
       });
     },
-    ...mapActions(["fetchData"]),
-    ...mapMutations({ fetch: "setPaymentsListData" }),
   },
+  
   async created() {
-  //  if(!paymentsList.lenght) {
-   //   await this.fetchData(1);
-   // }
+     // if(!paymentsList.lenght) {
+     // await this.fetchData(1);
+    // }
     if (this.$route.params?.page) {
       this.page = Number(this.$route.params.page);
     }
   },
+  
 };
+
 </script>
 <style>
 </style>
