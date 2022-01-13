@@ -1,5 +1,5 @@
 {
-  "name": "first-project",
+  "name": "calc.js",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,42 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test": "jest"
+  },
+  "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@vue/composition-api": "^1.4.3",
+    "babel-jest": "^27.4.6",
+    "core-js": "^3.20.2",
+    "regenerator-runtime": "^0.13.9",
+    "test": "^0.6.0",
+    "vue": "^2.6.11",
+    "vue-jest": "^3.0.7",
+    "vue-router": "^3.5.3",
+    "vuetify": "^2.6.2",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.8",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/test-utils": "^1.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "expect": "^27.4.6",
+    "jest": "^27.4.7",
+    "jsdom": "^19.0.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^4.0.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -18,31 +54,13 @@
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "collectCoverage": true,
-    "collectCoverageForm": ["**/*.{ja, vue", "!**/node_modules/**"]
+    "collectCoverageForm": [
+      "**/*.{je, vue",
+      "!**/node_modules/**"
+    ]
   },
-  "dependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
-    "@vue/composition-api": "^1.4.3",
-    "babel-jest": "^27.4.6",
-    "core-js": "^3.6.5",
-    "jest": "^27.4.7",
-    "vue": "^2.6.11",
-    "vue-jest": "^3.0.7",
-    "vue-router": "^3.5.3",
-    "vuex": "^3.6.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
-  }
+  "description": "## Project setup ``` npm install ```",
+  "main": ".eslintrc.js",
+  "author": "",
+  "license": "ISC"
 }
