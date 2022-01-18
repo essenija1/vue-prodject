@@ -10,15 +10,38 @@
       <v-col>
         Category
       </v-col>
-      <v-col :cols="2">
+      <v-col>
         Value
+      </v-col>
+      <v-col>
+        Button
       </v-col>
       </v-row>
       <v-row v-for="(item, idx) in items" :key="idx">
         <v-col :cols="1">{{item.id}}</v-col>
         <v-col>{{item.date}}</v-col>
         <v-col>{{item.category}}</v-col>
-        <v-col :cols="2">{{item.value}}</v-col>
+        <v-col>{{item.value}}</v-col>   
+          
+          <v-col>
+            <template>
+          <v-btn 
+          :items="dropdown_icon"
+          label="dropdown_icon"
+          v-on:click="cart += 1"> &times; </v-btn>
+          <div class="">
+              {{ message }}
+              <line-chart></line-chart>
+            </div>
+          </template></v-col>
+          <!--<button><slot name="but" @click="onClick">&times;</slot></button>-->
+        
+        
+        
+        
+        
+        
+        
     </v-row>
   </v-container>
 </template>
@@ -59,4 +82,5 @@ export default {
 </script>
 
 <style>
+
 </style>
