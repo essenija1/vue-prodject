@@ -5,7 +5,7 @@ import store from './store';
 import modal from './plugins/ModalWindow';
 //import context from './plugins/ContextMenu';
 import vuetify from './plugins/vuetify';
-
+import apexchart from './plugins/apexchart'
 
 
 
@@ -18,6 +18,7 @@ new Vue({
   router,
   store,
   //modal,
-  vuetify
+  vuetify,
+  apexchart
   
 }).$mount('#app')
