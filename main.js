@@ -6,6 +6,7 @@ import modal from './plugins/ModalWindow';
 //import context from './plugins/ContextMenu';
 import vuetify from './plugins/vuetify';
 import apexchart from './plugins/apexchart'
+import ModalButton from './components/ModalButton'
 
 
 
@@ -17,8 +18,8 @@ new Vue({
   render: h => h(App),
   router,
   store,
-  //modal,
   vuetify,
-  apexchart
+  apexchart,
+  ModalButton
   
 }).$mount('#app')
