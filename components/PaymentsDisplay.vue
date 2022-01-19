@@ -10,11 +10,11 @@
       <v-col>
         Category
       </v-col>
-      <v-col>
+      <v-col :cols="2">
         Value
       </v-col>
       <v-col>
-        Button
+        
       </v-col>
       </v-row>
       <v-row v-for="(item, idx) in items" :key="idx">
@@ -23,18 +23,27 @@
         <v-col>{{item.category}}</v-col>
         <v-col>{{item.value}}</v-col>   
           
-          <v-col>
+         <!-- <v-col>
             <template>
           <v-btn 
           :items="dropdown_icon"
           label="dropdown_icon"
-          v-on:click="cart += 1"> &times; </v-btn>
-          <div class="">
-              {{ message }}
-              <line-chart></line-chart>
-            </div>
-          </template></v-col>
-          <!--<button><slot name="but" @click="onClick">&times;</slot></button>-->
+          v-on:click="cart += 1"> &times; 
+        
+            <select>
+              <option value=""></option>
+              <option value="completed">Добавить</option>
+              <option value="deleted">Удалить</option>
+            </select></v-btn>
+          </template></v-col>-->
+
+          <button><slot name="&times;" @click="onClick">&times;
+          <select v-model="filter">
+            
+              <option value="completed">Добавить</option>
+              <option value="deleted">Удалить</option>
+            </select>
+            </slot></button>
         
         
         
@@ -53,6 +62,17 @@ export default {
     items: {
       type: Array,
       default: () => [],
+    },
+    data () {
+      return {
+          filter: 'all'
+        }
+    },
+    watch: {
+      filter (value) {
+         console.log(value)
+         
+      }
     },
   },
  // methods: {
@@ -81,6 +101,6 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+ 
 </style>
